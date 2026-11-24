@@ -27,9 +27,14 @@ def main() -> int:
     if not 1 <= len(text) <= 200:
         print(f"text is {len(text)} chars, must be 1-200", file=sys.stderr)
         return 1
+    if not text.strip():
+        print("text must not be only whitespace", file=sys.stderr)
+        return 1
     if "\n" in text:
         print("text must be a single line", file=sys.stderr)
         return 1
+    # Note: the em dash in the text is one character; len() counts it as 1,
+    # and the gate counts characters, so the 190-char count holds as written.
     path = os.path.join(out_dir, "entry.txt")
     with open(path, "w", encoding="utf-8") as f:
         f.write(text)
